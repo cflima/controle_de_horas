@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<link href="#{facesContext.externalContext.request.contextPath}/resources/css/stilo.css" rel="stylesheet" type="text/css" />
+</h:head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<body>
+	
+	<p:dialog widgetVar="encerrar" id="encerrar" header="Encerrar Item:" modal="true" height="160" width="345" >
+		
+		
+		<h:outputLabel value="Horas Executadas: "></h:outputLabel>
+		<p:inputText value="#{horasMB.mostrarHoras.horasExec}" size="5"></p:inputText>
+	
+		<BR></BR><BR></BR>
+		
+		<h:outputLabel style="margin-top:20px;" value="Observação: "></h:outputLabel>
+		<p:inputTextarea style="margin-left:34px; margin-bottom:-28px;" value="#{horasMB.mostrarHoras.obs}" rows="4" cols="25"></p:inputTextarea>
+		
+		<BR></BR><BR></BR>
+		<p:commandButton style="margin-left: 230px; margin-top:20px;" value="Encerrar" update=":form:tbHoras" oncomplete="encerrar.hide();" actionListener="#{horasMB.encerrarItem}"></p:commandButton>
+	</p:dialog>
+</body>
+</html>
+

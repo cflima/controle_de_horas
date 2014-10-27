@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<link href="#{facesContext.externalContext.request.contextPath}/resources/css/stilo.css" rel="stylesheet" type="text/css" />
+</h:head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<title>Controle de Horas!</title>
+
+<body>
+	
+	<div id="conteiner">
+		<h:form id="form">
+		
+		 <p:growl id="messages" showDetail="true" /> 
+		 
+		<p:panel styleClass="header"><br></br>
+			<h:outputText value="Apontamento de Horas" style="margin-left:615px; color:#B5B5B5; font-size:13px;"></h:outputText>
+		</p:panel>
+		
+		<p:panel id="panel" header="#{pro['panel.title']}:" style="-webkit-border-radius:10px;">
+		<p:messages ></p:messages>
+			
+			<h:outputLabel value="#{pro['label.cliente']}: "></h:outputLabel>
+			<p:inputText id="cliente" value="#{horasMB.horas.cliente}" size="40"></p:inputText>
+			
+			
+			<h:outputLabel value="#{pro['label.projeto']}: " styleClass="espaco"></h:outputLabel>
+			<p:inputText id="projeto" value="#{horasMB.horas.projeto}" size="40"></p:inputText>
+			
+			<h:outputLabel value="#{pro['label.torre']}: " styleClass="espaco" ></h:outputLabel>
+			<p:inputText id="item" value="#{horasMB.horas.item}" size="20"></p:inputText>
+			
+			<h:outputLabel styleClass="espaco" value="#{pro['label.hrsEst']}: "></h:outputLabel>
+			<p:inputText id="Horas_Estimadas" value="#{horasMB.horas.horasEstim}" size="3">
+				<f:convertNumber  integerOnly="true"/>  
+			</p:inputText>
+					
+			<h:outputLabel styleClass="espaco" value="#{pro['label.vrHora']}: "></h:outputLabel>
+			<p:inputText id="Valor_Hora" value="#{horasMB.horas.valorHora}" size="3" >
+				<f:convertNumber integerOnly="true" /> 
+			</p:inputText>
+			
+			<p:commandButton value="#{pro['botao.ok']}" action="#{horasMB.inserirItem}" style="margin-left:10px;" update="tbHoras panel saldo" />
+			
+			
+			<br></br><br></br><br></br><br></br>
+			
+			<p:commandLink onclick="planilha.show()">
+				<p:graphicImage id="excel" value="..\resources\imagens\excel.jpg" height="20" width="20"></p:graphicImage>
+				<p:tooltip for="excel" value="Clique aqui pra gerar planilha Excel."></p:tooltip>
+			</p:commandLink>
+			
+			<p:selectOneMenu value="#{documentoMB.horas.mes}" style="margin-left:550px;">  
+	            <f:selectItem itemLabel="Escolha o Mês de referência" noSelectionOption="true" />  
+	            <f:selectItem itemLabel="Janeiro" itemValue="Janeiro" />  
+	            <f:selectItem itemLabel="Fevereiro" itemValue="Fevereiro" />  
+	            <f:selectItem itemLabel="Março" itemValue="Marco" />
+	            <f:selectItem itemLabel="Abril" itemValue="Abril" />
+	            <f:selectItem itemLabel="Maio" itemValue="Maio" />
+	            <f:selectItem itemLabel="Junho" itemValue="Junho" />
+	            <f:selectItem itemLabel="Julho" itemValue="Julho" />
+	            <f:selectItem itemLabel="Agosto" itemValue="Agosto" />
+	            <f:selectItem itemLabel="Setembro" itemValue="Setembro" />
+	            <f:selectItem itemLabel="Outubro" itemValue="Outubro" />
+	            <f:selectItem itemLabel="Novembro" itemValue="Novembro" />
+	            <f:selectItem itemLabel="Dezembro" itemValue="Dezembro" />  
+	        </p:selectOneMenu>  
+			
+			<h:outputText id="saldo" style="margin-left:400px; color:blue;" value="Saldo Parcial: R$ #{horasMB.saldoTotal}"></h:outputText>
+			
+			<p:dataTable id="tbHoras" value="#{horasMB.listaItens}" editable="true" editMode="cell"  paginator="true" rows="11" var="horas" emptyMessage="Nenhum item adicionado!">
+				
+				<p:ajax event="cellEdit" listener="#{horasMB.alterarItem}" update=":form:messages" /> 
+				
+				<h:inputHidden id="hiddenId" value="#{horas.idHoras}"></h:inputHidden>
+				
+				<p:column headerText="#{pro['col.dataInicio']}" styleClass="centerTable">
+					<h:outputText value="#{horas.data}"></h:outputText>
+				</p:column>
+				
+				<p:column headerText="#{pro['col.dataConcl']}" styleClass="centerTable">
+					<h:outputText value="#{horas.dtConclusao}"></h:outputText>
+				</p:column>
+				
+				<p:column id="cliente" headerText="#{pro['col.cliente']}" styleClass="centerTable">
+					<p:cellEditor>
+						<f:facet name="output"><h:outputText value="#{horas.cliente}" /></f:facet> 
+						<f:facet name="input"><p:inputText value="#{horas.cliente}" /> </f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column id="projeto" headerText="#{pro['col.projeto']}" styleClass="centerTable">
+					<p:cellEditor>
+						<f:facet name="output"><h:outputText value="#{horas.projeto}" /></f:facet>
+						<f:facet name="input"><p:inputText value="#{horas.projeto}" /></f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column id="item" headerText="#{pro['col.torre']}" styleClass="centerTable">
+				<p:cellEditor>
+					<f:facet name="output"><h:outputText value="#{horas.item}" /></f:facet>
+					<f:facet name="input"><p:inputText value="#{horas.item}" /></f:facet>
+				</p:cellEditor>	
+				</p:column>
+				
+				<p:column id="horasEstim" headerText="#{pro['col.hrsEst']}" styleClass="centerTable" >
+					<p:cellEditor>
+						<f:facet name="output"><h:outputText value="#{horas.horasEstim}" /></f:facet>
+						<f:facet name="input"><p:inputText value="#{horas.horasEstim}" onblur="atualizarSaldo();" ></p:inputText></f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column id="valorHora" headerText="#{pro['col.vrHora']}" styleClass="centerTable" >
+					<p:cellEditor>
+						<f:facet name="output"><h:outputText value="#{horas.valorHora}" /></f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{horas.valorHora}"  onblur="atualizarSaldo();"></p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column headerText="#{pro['col.status']}" styleClass="centerTable">
+					<p:commandLink oncomplete="encerrar.show()" disabled="#{horas.status == 1 ? 'true' : 'false'}">
+					<h:outputText id="status" value="#{horas.status == 1 ? 'Encerrado' : 'Iniciado'}" ></h:outputText>
+						<f:setPropertyActionListener target="#{horasMB.mostrarHoras}" value="#{horas}" />
+					</p:commandLink>
+					<p:tooltip for="status" value="#{horas.status == 1 ? 'Item encerrado' : 'Clique aqui para encerrar item!'}"></p:tooltip>
+				</p:column>
+				
+				<p:column headerText="#{pro['col.obs']}" styleClass="centerTable">
+					<p:commandLink id="linkObs" oncomplete="obs.show()" update=":form:observacao" disabled="#{horas.obs == null || horas.obs == '' ? 'true' : 'false'}">
+					<p:graphicImage id="obs" value="../resources/imagens/msg.png" height="15" width="15"  />
+						<f:setPropertyActionListener target="#{horasMB.mostrarHoras}" value="#{horas}" />
+					</p:commandLink>
+				</p:column>
+				
+				<p:column headerText="#{pro['col.excluir']}" styleClass="centerTable" >
+					<p:commandLink onclick="confirmar.show()">
+						<p:graphicImage id="excluir" value="../resources/imagens/delete.png" height="15" width="15"  />
+							<f:setPropertyActionListener target="#{horasMB.mostrarHoras}" value="#{horas}" />
+					</p:commandLink>
+				</p:column>
+				
+			</p:dataTable>
+					
+			</p:panel>
+			
+			<p:panel styleClass="footer">
+				<h:outputLabel value="@ 2013 CrsTI - Todos os direitos reservados." style="margin-left:550px;" />
+			</p:panel>
+			<ui:include src="conclusaoHoras.xhtml"></ui:include>
+			<ui:include src="modalObservacao.xhtml"></ui:include>
+			<ui:include src="modalPlanilha.xhtml"></ui:include>
+			
+		</h:form>
+		
+		<ui:include src="modalConfirmacao.xhtml"></ui:include>
+		
+		<script type="text/javascript">
+			function atualizarSaldo(){
+				window.location.href='index.xhtml';
+			}
+		</script>
+	</div>
+</body>
+</html>
+

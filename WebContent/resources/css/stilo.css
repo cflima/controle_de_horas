@@ -1,0 +1,37 @@
+body{
+	background-image: url("../imagens/images.jpg") ;
+	background-repeat: no-repeat;	
+	background-size: 1370px 650px;
+	opacity: 0.9;
+	
+}
+.ui-widget {
+	font-size: 12px !important;
+}
+
+.espaco{
+	margin-left: 10px;
+}
+
+.centerTable{
+	text-align: center;
+	
+}
+
+.footer{
+	margin-top: 5px;
+	width: 1345px;
+	height: 30px;
+	-webkit-border-radius:10px;
+}
+
+.header{
+	-webkit-border-radius:10px;
+	width: 1345px;
+	height: 100px;
+	margin-bottom: 5px;
+	background-image: url("../imagens/logo.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size:200px;
+}
